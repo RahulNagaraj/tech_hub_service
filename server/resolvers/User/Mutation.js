@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash'
 
-import { User } from '../models/User'
+import { User } from '../../models/User'
 
 const addUser = async (
 	_,

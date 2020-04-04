@@ -1,9 +1,10 @@
 import { GraphQLServer } from 'graphql-yoga'
 import mongoose from 'mongoose'
+import { merge } from 'lodash'
 
 import { typeDefs } from './schema'
-import Query from './resolvers/Query'
-import Mutation from './resolvers/Mutation'
+import UserQuery from './resolvers/User/Query'
+import UserMutation from './resolvers/User/Mutation'
 
 mongoose
 	.connect('mongodb://localhost:27017/tech_hub', {
@@ -16,8 +17,8 @@ mongoose
 	})
 
 const resolvers = {
-	Query,
-	Mutation,
+	Query: merge(UserQuery),
+	Mutation: merge(UserMutation),
 }
 
 const server = new GraphQLServer({ typeDefs, resolvers })
