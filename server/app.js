@@ -1,4 +1,17 @@
 import { GraphQLServer } from 'graphql-yoga'
+import mongoose from 'mongoose'
+
+const databaseUrl = 'mongodb://localhost:27017/tech_hub'
+
+const connect = mongoose.connect(databaseUrl, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+})
+connect
+	.then(db => console.log('Connected successfully to Mongo'))
+	.catch(err => {
+		throw Error(`Unable to connect to MongoDB ${err}`)
+	})
 
 const typeDefs = `
 	type Query {
