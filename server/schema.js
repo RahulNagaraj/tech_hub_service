@@ -18,7 +18,9 @@ const typeDefs = `
 
 	type Mutation {
 		addUser(first_name: String!, last_name: String!, email: String!, sso: Int!): User!
-		deleteUser(id: String!): User!
+		deleteUser(id: ID!): User!
+		likeEvent(userId: ID!, eventId: ID!): User!
+		upsertInterestedTopics(id: ID!, topics: [String]!): User!
 	}
 `
 export { typeDefs }
