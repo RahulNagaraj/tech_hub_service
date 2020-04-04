@@ -1,33 +1,55 @@
 import { GraphQLServer } from 'graphql-yoga'
 import mongoose from 'mongoose'
+import { typeDefs } from './schema'
+import { User } from './models/user'
 
-const databaseUrl = 'mongodb://localhost:27017/tech_hub'
-
-const connect = mongoose.connect(databaseUrl, {
-	useNewUrlParser: true,
+mongoose.connect('mongodb://localhost:27017/tech_hub', {
 	useUnifiedTopology: true,
+	useNewUrlParser: true,
 })
-connect
-	.then(db => console.log('Connected successfully to Mongo'))
-	.catch(err => {
-		throw Error(`Unable to connect to MongoDB ${err}`)
-	})
-
-const typeDefs = `
-	type Query {
-		info: String!
-	}
-`
 
 const resolvers = {
 	Query: {
-		info: () => `This is info query`,
+		info: () => 'Hello World',
+		getUsers: () => User.find(),
+		getUser: async (_, { id }) => {
+			var result = await User.findById(id)
+			return result
+		},
+	},
+	Mutation: {
+		addUser: async (
+			_,
+			{
+				first_name,
+				last_name,
+				email,
+				sso,
+				liked_events,
+				interested_topics,
+				roles,
+			}
+		) => {
+			const user = new User({
+				first_name,
+				last_name,
+				email,
+				sso,
+				liked_events,
+				interested_topics,
+				roles,
+			})
+			await user.save()
+			return user
+		},
+		deleteUser: async (_, { id }) => {
+			const user = await User.findByIdAndDelete(id)
+			return user
+		},
 	},
 }
 
-const server = new GraphQLServer({
-	typeDefs,
-	resolvers,
+const server = new GraphQLServer({ typeDefs, resolvers })
+mongoose.connection.once('open', function () {
+	server.start(() => console.log('Server is running on localhost:4000'))
 })
-
-server.start(() => console.log('Server is running on http://localhost:4000'))
