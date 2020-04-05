@@ -23,10 +23,30 @@ type LocationDetail {
 	image_url: String!
 }
 
+input LocationDetailInput {
+	name: String!
+	address: String!
+	city: String!
+	country: String!
+	country_short_code: String!
+	direction: String!
+	zip_code: String!
+	image_url: String!
+}
+
 type KeyHighlight {
 	first_name: String!
 	last_name: String!
 	avatar_url: String!
+	topic: String!
+	place: String!
+	start_time: Date!
+	end_time: Date!
+}
+
+input KeyHighlightInput {
+	first_name: String!
+	last_name: String!
 	topic: String!
 	place: String!
 	start_time: Date!
@@ -87,4 +107,18 @@ type Mutation {
 	deleteUser(id: ID!): User!
 	likeEvent(userId: ID!, eventId: ID!): User!
 	upsertInterestedTopics(id: ID!, topics: [String]!): User!
+	addEvent(
+		title: String!
+		description: String!
+		short_description: String
+		location_details: LocationDetailInput!
+		date: Date!
+		start_time: Date!
+		end_time: Date!
+		days: Int!
+		keyHighlights: [KeyHighlightInput!]!
+		image_url: String!
+		topics: [String!]!
+		category: [String!]!
+	): Event!
 }

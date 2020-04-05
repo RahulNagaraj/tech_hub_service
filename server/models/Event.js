@@ -45,7 +45,6 @@ const eventSchema = new Schema(
 		},
 		agenda: {
 			type: [String],
-			required: true,
 		},
 		votes: {
 			type: [String],
@@ -53,7 +52,6 @@ const eventSchema = new Schema(
 		},
 		questions: {
 			type: [String],
-			required: true,
 		},
 		image_url: {
 			type: String,
@@ -64,7 +62,7 @@ const eventSchema = new Schema(
 			required: true,
 		},
 		category: {
-			type: [Object],
+			type: [String],
 			required: true,
 		},
 	},
