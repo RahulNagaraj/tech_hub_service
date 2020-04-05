@@ -1,10 +1,8 @@
 import { GraphQLServer } from 'graphql-yoga'
 import mongoose from 'mongoose'
-import { merge } from 'lodash'
 
-import { typeDefs } from './schema'
-import UserQuery from './resolvers/User/Query'
-import UserMutation from './resolvers/User/Mutation'
+import typeDefs from './schema.graphql'
+import resolvers from './resolvers'
 
 mongoose
 	.connect('mongodb://localhost:27017/tech_hub', {
@@ -15,11 +13,6 @@ mongoose
 	.catch((error) => {
 		throw new Error('Unable to connect to Tech Hub')
 	})
-
-const resolvers = {
-	Query: merge(UserQuery),
-	Mutation: merge(UserMutation),
-}
 
 const server = new GraphQLServer({ typeDefs, resolvers })
 mongoose.connection.once('open', function () {

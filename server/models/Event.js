@@ -20,10 +20,10 @@ const eventSchema = new Schema(
 			type: String,
 			default: '',
 		},
-		location_detail: {
-			type: LocationDetail,
-			required: true,
-		},
+		// location_detail: {
+		// 	type: LocationDetail,
+		// 	required: true,
+		// },
 		date: {
 			type: Date,
 			required: true,
@@ -36,7 +36,7 @@ const eventSchema = new Schema(
 			type: Date,
 			required: true,
 		},
-		no_days: {
+		no_of_days: {
 			type: Number,
 			required: true,
 		},
@@ -44,14 +44,14 @@ const eventSchema = new Schema(
 			type: [String],
 			default: [],
 		},
-		keyHighlights: {
-			type: [KeyHighlight],
-			required: true,
-		},
-		speakers: {
-			type: [Speaker],
-			required: true,
-		},
+		// keyHighlights: {
+		// 	type: [KeyHighlight],
+		// 	required: true,
+		// },
+		// speakers: {
+		// 	type: [Speaker],
+		// 	required: true,
+		// },
 		agenda: {
 			type: [String],
 			required: true,
@@ -72,10 +72,10 @@ const eventSchema = new Schema(
 			type: [String],
 			required: true,
 		},
-		category: {
-			type: [EventCategory],
-			required: true,
-		},
+		// category: {
+		// 	type: [EventCategory],
+		// 	required: true,
+		// },
 	},
 	{
 		skipVersioning: true,

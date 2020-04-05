@@ -12,6 +12,7 @@
 		"@babel/plugin-transform-runtime": "^7.9.0",
 		"@babel/preset-env": "^7.9.0",
 		"@babel/runtime": "^7.9.2",
+		"babel-plugin-import-graphql": "^2.7.0",
 		"cross-env": "^7.0.2",
 		"graphql-yoga": "^1.18.3",
 		"lodash": "^4.17.15",
@@ -38,7 +39,8 @@
 		"plugins": [
 			[
 				"@babel/transform-runtime"
-			]
+			],
+			"import-graphql"
 		]
 	},
 	"scripts": {
@@ -49,6 +51,6 @@
 		"prod": "cross-env NODE_ENV=production npm-run-all build server",
 		"transpile": "babel ./server --out-dir dist",
 		"clean": "rimraf dist-server",
-		"watch:dev": "nodemon"
+		"local": "nodemon -e js,graphql"
 	}
 }
