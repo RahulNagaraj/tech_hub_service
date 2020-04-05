@@ -12,8 +12,37 @@ type User {
 
 scalar Date
 
-type EventDate {
-	date: Date
+type LocationDetail {
+	name: String!
+	address: String!
+	city: String!
+	country: String!
+	country_short_code: String!
+	direction: String!
+	zip_code: String!
+	image_url: String!
+}
+
+type KeyHighlight {
+	first_name: String!
+	last_name: String!
+	email: String!
+	avatar_url: String!
+	topics: String!
+	place: String!
+	start_time: Date!
+	end_time: Date!
+}
+
+type Speaker {
+	id: ID!
+	first_name: String!
+	last_name: String!
+	email: String!
+	avatar_url: String
+	topics: [String!]!
+	hobbies: [String]!
+	events: [Event!]!
 }
 
 # Event Type
@@ -22,11 +51,14 @@ type Event {
 	title: String!
 	description: String!
 	short_description: String
+	location_details: LocationDetail!
 	date: Date!
 	start_time: Date!
 	end_time: Date
 	no_of_days: Int!
 	users_liked: [String]!
+	keyHighlights: [KeyHighlight!]!
+	speakers: [Speaker]
 	image_url: String!
 	topics: [String!]!
 }

@@ -12,7 +12,6 @@ const DateResolver = {
 			return value.getTime() // value sent to the client
 		},
 		parseLiteral(ast) {
-			console.log('ast: ', ast)
 			if (ast.kind === Kind.INT) {
 				return new Date(ast.kind) // ast value is always in string format
 			}

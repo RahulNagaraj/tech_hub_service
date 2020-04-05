@@ -28,7 +28,7 @@ const speakerSchema = new Schema(
 			default: [],
 		},
 		events: {
-			type: [String],
+			type: [Object],
 			required: true,
 		},
 	},

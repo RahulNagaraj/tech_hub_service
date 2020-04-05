@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import { EventCategory } from './EventCategory'
+// import { EventCategory } from './EventCategory'
 import { Speaker } from './Speaker'
 import { KeyHighlight } from './KeyHighlight'
 import { LocationDetail } from './LocationDetail'
@@ -20,10 +20,10 @@ const eventSchema = new Schema(
 			type: String,
 			default: '',
 		},
-		// location_detail: {
-		// 	type: LocationDetail,
-		// 	required: true,
-		// },
+		location_details: {
+			type: Object,
+			required: true,
+		},
 		date: {
 			type: Date,
 			required: true,
@@ -44,12 +44,12 @@ const eventSchema = new Schema(
 			type: [String],
 			default: [],
 		},
-		// keyHighlights: {
-		// 	type: [KeyHighlight],
-		// 	required: true,
-		// },
+		keyHighlights: {
+			type: [Object],
+			required: true,
+		},
 		// speakers: {
-		// 	type: [Speaker],
+		// 	type: [Object],
 		// 	required: true,
 		// },
 		agenda: {
@@ -72,10 +72,10 @@ const eventSchema = new Schema(
 			type: [String],
 			required: true,
 		},
-		// category: {
-		// 	type: [EventCategory],
-		// 	required: true,
-		// },
+		category: {
+			type: [Object],
+			required: true,
+		},
 	},
 	{
 		skipVersioning: true,
