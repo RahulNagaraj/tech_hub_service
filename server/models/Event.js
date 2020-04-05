@@ -1,10 +1,5 @@
 import mongoose from 'mongoose'
 
-// import { EventCategory } from './EventCategory'
-import { Speaker } from './Speaker'
-import { KeyHighlight } from './KeyHighlight'
-import { LocationDetail } from './LocationDetail'
-
 const Schema = mongoose.Schema
 const eventSchema = new Schema(
 	{
@@ -36,22 +31,18 @@ const eventSchema = new Schema(
 			type: Date,
 			required: true,
 		},
-		no_of_days: {
+		days: {
 			type: Number,
 			required: true,
 		},
-		users_liked: {
-			type: [String],
-			default: [],
+		likes: {
+			type: Number,
+			default: 0,
 		},
 		keyHighlights: {
 			type: [Object],
 			required: true,
 		},
-		// speakers: {
-		// 	type: [Object],
-		// 	required: true,
-		// },
 		agenda: {
 			type: [String],
 			required: true,

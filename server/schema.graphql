@@ -26,9 +26,8 @@ type LocationDetail {
 type KeyHighlight {
 	first_name: String!
 	last_name: String!
-	email: String!
 	avatar_url: String!
-	topics: String!
+	topic: String!
 	place: String!
 	start_time: Date!
 	end_time: Date!
@@ -45,6 +44,13 @@ type Speaker {
 	events: [Event!]!
 }
 
+type EventCategory {
+	id: ID!
+	name: String!
+	title: String!
+	icon: String!
+}
+
 # Event Type
 type Event {
 	id: ID!
@@ -55,18 +61,20 @@ type Event {
 	date: Date!
 	start_time: Date!
 	end_time: Date
-	no_of_days: Int!
-	users_liked: [String]!
+	days: Int!
+	likes: Int!
 	keyHighlights: [KeyHighlight!]!
 	speakers: [Speaker]
 	image_url: String!
 	topics: [String!]!
+	category: [String!]!
 }
 
 type Query {
 	getUser(id: ID!): User!
 	getUsers: [User!]!
 	getEvent(id: ID!): Event!
+	getEvents: [Event]!
 }
 
 type Mutation {
