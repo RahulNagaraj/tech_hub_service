@@ -6,9 +6,8 @@ const EventResolver = {
 	speakers: async ({ _id }) => {
 		const speakers = await Speaker.find({})
 		return speakers.filter((speaker) => {
-			for (let i of speaker.events) {
-				if (isEqual(i, _id)) return true
-				return false
+			for (let eventId of speaker.events) {
+				if (isEqual(eventId, _id)) return true
 			}
 		})
 	},

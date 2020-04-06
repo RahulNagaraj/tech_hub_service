@@ -6,6 +6,7 @@ const eventSchema = new Schema(
 		title: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		description: {
 			type: String,
@@ -16,7 +17,42 @@ const eventSchema = new Schema(
 			default: '',
 		},
 		location_details: {
-			type: Object,
+			id: false,
+			_id: false,
+			type: {
+				name: {
+					type: String,
+					required: true,
+				},
+				address: {
+					type: String,
+					required: true,
+				},
+				city: {
+					type: String,
+					required: true,
+				},
+				country: {
+					type: String,
+					required: true,
+				},
+				country_short_code: {
+					type: String,
+					required: true,
+				},
+				direction: {
+					type: String,
+					required: true,
+				},
+				zip_code: {
+					type: String,
+					required: true,
+				},
+				image_url: {
+					type: String,
+					required: true,
+				},
+			},
 			required: true,
 		},
 		date: {
@@ -40,7 +76,36 @@ const eventSchema = new Schema(
 			default: 0,
 		},
 		keyHighlights: {
-			type: [Object],
+			id: false,
+			_id: false,
+			type: [
+				{
+					first_name: {
+						type: String,
+						required: true,
+					},
+					last_name: {
+						type: String,
+						required: true,
+					},
+					avatar_url: {
+						type: String,
+						default: '',
+					},
+					topic: {
+						type: String,
+						required: true,
+					},
+					start_time: {
+						type: Date,
+						required: true,
+					},
+					end_time: {
+						type: Date,
+						required: true,
+					},
+				},
+			],
 			required: true,
 		},
 		agenda: {
@@ -67,7 +132,6 @@ const eventSchema = new Schema(
 		},
 	},
 	{
-		skipVersioning: true,
 		timestamps: true,
 	}
 )

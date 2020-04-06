@@ -49,8 +49,8 @@ input KeyHighlightInput {
 	last_name: String!
 	topic: String!
 	place: String!
-	start_time: Date!
-	end_time: Date!
+	start_time: String!
+	end_time: String!
 }
 
 type Speaker {
@@ -80,7 +80,7 @@ type Event {
 	location_details: LocationDetail!
 	date: Date!
 	start_time: Date!
-	end_time: Date
+	end_time: Date!
 	days: Int!
 	likes: Int!
 	keyHighlights: [KeyHighlight!]!
@@ -112,9 +112,9 @@ type Mutation {
 		description: String!
 		short_description: String
 		location_details: LocationDetailInput!
-		date: Date!
-		start_time: Date!
-		end_time: Date!
+		date: String!
+		start_time: String!
+		end_time: String!
 		days: Int!
 		keyHighlights: [KeyHighlightInput!]!
 		image_url: String!

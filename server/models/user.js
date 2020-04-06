@@ -36,7 +36,6 @@ const userSchema = new Schema(
 		},
 	},
 	{
-		skipVersioning: true,
 		timestamps: true,
 	}
 )
