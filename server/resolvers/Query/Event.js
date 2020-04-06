@@ -10,7 +10,25 @@ const getEvents = async (_) => {
 	return events
 }
 
+const getEventsByLocation = async (_, { city }) => {
+	const events = await Event.find({ 'location_details.city': city })
+	return events
+}
+
+const getEventsByCategory = async (_, { name }) => {
+	const events = await Event.find({ category: name })
+	return events
+}
+
+const getEventsByTitle = async (_, { input }) => {
+	const events = await Event.find({ $text: { $search: `"${input}"` } })
+	return events
+}
+
 export default {
 	getEvent,
 	getEvents,
+	getEventsByLocation,
+	getEventsByCategory,
+	getEventsByTitle,
 }

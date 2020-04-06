@@ -95,6 +95,9 @@ type Query {
 	getUsers: [User!]!
 	getEvent(id: ID!): Event!
 	getEvents: [Event]!
+	getEventsByLocation(city: String!): [Event]!
+	getEventsByCategory(name: String!): [Event!]!
+	getEventsByTitle(input: String!): [Event]!
 }
 
 type Mutation {
