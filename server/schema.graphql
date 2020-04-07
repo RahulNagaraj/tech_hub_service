@@ -98,6 +98,7 @@ type Query {
 	getEventsByLocation(city: String!): [Event]!
 	getEventsByCategory(name: String!): [Event!]!
 	getEventsByTitle(input: String!): [Event]!
+	getSpeaker(id: ID!): Speaker!
 }
 
 type Mutation {
@@ -124,4 +125,13 @@ type Mutation {
 		topics: [String!]!
 		category: [String!]!
 	): Event!
+	addSpeaker(
+		first_name: String!
+		last_name: String!
+		email: String!
+		avatar_url: String!
+		topics: [String!]!
+		hobbies: [String]!
+		events: [ID!]!
+	): Speaker!
 }
