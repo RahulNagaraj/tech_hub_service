@@ -1,7 +1,7 @@
 import { Speaker } from '../../models/Speaker'
 
 const getSpeakers = async (_) => {
-	const speakers = await speakers.find({})
+	const speakers = await Speaker.find({})
 	return speakers
 }
 
