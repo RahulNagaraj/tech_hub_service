@@ -1,6 +1,69 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+
+const locationSchema = new Schema({
+	name: {
+		type: String,
+		required: true,
+	},
+	address: {
+		type: String,
+		required: true,
+	},
+	city: {
+		type: String,
+		required: true,
+	},
+	country: {
+		type: String,
+		required: true,
+	},
+	country_short_code: {
+		type: String,
+		required: true,
+	},
+	direction: {
+		type: String,
+		required: true,
+	},
+	zip_code: {
+		type: String,
+		required: true,
+	},
+	image_url: {
+		type: String,
+		required: true,
+	},
+})
+
+const keyHighlightSchema = new Schema({
+	first_name: {
+		type: String,
+		required: true,
+	},
+	last_name: {
+		type: String,
+		required: true,
+	},
+	avatar_url: {
+		type: String,
+		default: '',
+	},
+	topic: {
+		type: String,
+		required: true,
+	},
+	start_time: {
+		type: Date,
+		required: true,
+	},
+	end_time: {
+		type: Date,
+		required: true,
+	},
+})
+
 const eventSchema = new Schema(
 	{
 		title: {
@@ -19,40 +82,7 @@ const eventSchema = new Schema(
 		location_details: {
 			id: false,
 			_id: false,
-			type: {
-				name: {
-					type: String,
-					required: true,
-				},
-				address: {
-					type: String,
-					required: true,
-				},
-				city: {
-					type: String,
-					required: true,
-				},
-				country: {
-					type: String,
-					required: true,
-				},
-				country_short_code: {
-					type: String,
-					required: true,
-				},
-				direction: {
-					type: String,
-					required: true,
-				},
-				zip_code: {
-					type: String,
-					required: true,
-				},
-				image_url: {
-					type: String,
-					required: true,
-				},
-			},
+			type: locationSchema,
 			required: true,
 		},
 		date: {
@@ -78,35 +108,8 @@ const eventSchema = new Schema(
 		keyHighlights: {
 			id: false,
 			_id: false,
-			type: [
-				{
-					first_name: {
-						type: String,
-						required: true,
-					},
-					last_name: {
-						type: String,
-						required: true,
-					},
-					avatar_url: {
-						type: String,
-						default: '',
-					},
-					topic: {
-						type: String,
-						required: true,
-					},
-					start_time: {
-						type: Date,
-						required: true,
-					},
-					end_time: {
-						type: Date,
-						required: true,
-					},
-				},
-			],
-			required: true,
+			type: [keyHighlightSchema],
+			rquired: true,
 		},
 		agenda: {
 			type: [String],

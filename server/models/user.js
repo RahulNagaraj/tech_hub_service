@@ -26,6 +26,7 @@ const userSchema = new Schema(
 		},
 		interested_topics: {
 			type: Array,
+			of: String,
 			required: false,
 			default: [],
 		},

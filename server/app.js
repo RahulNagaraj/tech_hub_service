@@ -8,6 +8,7 @@ mongoose
 	.connect('mongodb://localhost:27017/tech_hub', {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
+		useCreateIndex: true,
 	})
 	.then(() => console.info('Successfully connected to Tech Hub'))
 	.catch((error) => {
