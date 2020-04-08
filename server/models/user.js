@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+
 const userSchema = new Schema(
 	{
 		first_name: {
@@ -14,24 +15,26 @@ const userSchema = new Schema(
 		email: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		sso: {
 			type: Number,
 			required: true,
+			unique: true,
 		},
 		liked_events: {
-			type: Array,
+			type: [Schema.ObjectId],
 			required: false,
 			default: [],
 		},
 		interested_topics: {
-			type: Array,
-			of: String,
+			type: [String],
 			required: false,
 			default: [],
 		},
 		roles: {
-			type: Array,
+			enum: ['user', 'admin'],
+			type: [String],
 			required: false,
 			default: ['user'],
 		},

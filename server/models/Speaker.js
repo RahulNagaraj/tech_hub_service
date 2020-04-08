@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+
 const speakerSchema = new Schema(
 	{
 		first_name: {
@@ -14,8 +15,9 @@ const speakerSchema = new Schema(
 		email: {
 			type: String,
 			required: true,
+			unique: true,
 		},
-		avatar_url: {
+		avatar: {
 			type: String,
 			default: '',
 		},
@@ -28,9 +30,9 @@ const speakerSchema = new Schema(
 			default: [],
 		},
 		events: {
-			type: [Object],
+			type: [Schema.ObjectId],
 			required: true,
-			unique: true,
+			default: [],
 		},
 	},
 	{

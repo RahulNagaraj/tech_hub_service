@@ -1,20 +1,9 @@
 import { Speaker } from '../../models/Speaker'
 
-const addSpeaker = async (
-	_,
-	{ first_name, last_name, email, avatar_url, topics, hobbies, events }
-) => {
-	const speaker = new Speaker({
-		first_name,
-		last_name,
-		email,
-		avatar_url,
-		topics,
-		hobbies,
-		events,
-	})
-	await speaker.save()
-	return speaker
+const addSpeaker = async (_, { speaker }) => {
+	const newSpeaker = new Speaker(speaker)
+	await newSpeaker.save()
+	return newSpeaker
 }
 
 export default {

@@ -1,17 +1,52 @@
+########################################
+# GraphQL Types
+
+#####################
+# User Schema
+
 # User Type
 type User {
 	id: ID!
 	first_name: String!
-	last_name: String
+	last_name: String!
 	email: String!
 	sso: Int!
 	liked_events: [ID]!
 	interested_topics: [String]!
-	roles: [String!]!
+	roles: [UserRoles!]!
 }
 
+# User Roles
+enum UserRoles {
+	user
+	admin
+}
+
+#####################
+# Event Schema
+
+# Location Types
+enum LocationType {
+	Point
+}
+
+# Custom Date type
 scalar Date
 
+# Location coordinates of the event
+type Location {
+	type: LocationType!
+	coordinates: [Int]!
+}
+
+# Contact information
+type ContactInformation {
+	email: String!
+	phone: [Int]
+	mobile: [Int]
+}
+
+# Location Details of the event
 type LocationDetail {
 	name: String!
 	address: String!
@@ -20,55 +55,34 @@ type LocationDetail {
 	country_short_code: String!
 	direction: String!
 	zip_code: String!
-	image_url: String!
+	image: String!
+	location: Location!
+	contact_information: ContactInformation!
 }
 
-input LocationDetailInput {
-	name: String!
-	address: String!
-	city: String!
-	country: String!
-	country_short_code: String!
-	direction: String!
-	zip_code: String!
-	image_url: String!
-}
-
+# Key Highlights of the event
 type KeyHighlight {
 	first_name: String!
 	last_name: String!
-	avatar_url: String!
+	avatar: String!
 	topic: String!
 	place: String!
 	start_time: Date!
 	end_time: Date!
 }
 
-input KeyHighlightInput {
+# Organizer
+type Organizer {
 	first_name: String!
 	last_name: String!
-	topic: String!
-	place: String!
-	start_time: String!
-	end_time: String!
+	contact_information: ContactInformation!
 }
 
-type Speaker {
-	id: ID!
-	first_name: String!
-	last_name: String!
-	email: String!
-	avatar_url: String
-	topics: [String!]!
-	hobbies: [String]!
-	events: [Event!]!
-}
-
-type EventCategory {
-	id: ID!
-	name: String!
-	title: String!
-	icon: String!
+# Event Category
+enum Category {
+	Events
+	Birthdays
+	Volunteering
 }
 
 # Event Type
@@ -83,12 +97,192 @@ type Event {
 	end_time: Date!
 	days: Int!
 	likes: Int!
-	keyHighlights: [KeyHighlight!]!
-	speakers: [Speaker]
-	image_url: String!
+	key_highlights: [KeyHighlight!]!
+	speakers: [Speaker!]!
+	image: String!
 	topics: [String!]!
-	category: [String!]!
+	category: [Category!]!
+	organizers: [Organizer]!
 }
+
+#####################
+# Speaker Schema
+
+type Speaker {
+	id: ID!
+	first_name: String!
+	last_name: String!
+	email: String!
+	avatar: String
+	topics: [String!]!
+	hobbies: [String]!
+	events: [Event!]!
+}
+
+#####################
+# Survey Schema
+
+enum InputType {
+	input
+	list
+	rating
+}
+
+enum RatingIcon {
+	star
+	like
+	thumbsup
+}
+
+enum InputRuleType {
+	text
+	number
+}
+
+# union RuleType = ListRule | RatingRule | InputRule
+
+# List Option
+type ListOption {
+	label: String!
+	value: String!
+	sub_title: String
+	avatar: String
+	info_icon: Boolean
+	info_text: String
+}
+
+# Rating Option
+type RatingOption {
+	label: String
+	info_icon: Boolean
+	info_text: String
+}
+
+# List Rule
+type ListRule {
+	options: [ListOption!]!
+	show_avatar: Boolean
+}
+
+# Rating Rule
+type RatingRule {
+	options: RatingOption!
+	scale: Int
+	icon: RatingIcon
+}
+
+# Input Rule
+type InputRule {
+	type: InputRuleType!
+	label: String!
+	name: String!
+	max_length: Int
+	min_length: Int
+}
+
+# Rule Type
+type Rule {
+	input_type: InputType!
+	list_rule: ListRule
+	rating_rule: RatingRule
+	input_rule: InputRule
+	# ... on ListRule {
+	# 	options
+	# 	avatar
+	# }
+	# ... on RatingRule {
+	# 	options
+	# 	scale
+	# 	icon
+	# }
+	# ... InputRule {
+	# 	type
+	# 	label
+	# 	name
+	# 	max_length
+	# 	min_length
+	# }
+	required: Boolean!
+}
+
+# Question Type
+type Question {
+	title: String!
+	name: String!
+	sub_title: String
+	rules: [Rule!]!
+}
+
+# Survey Type
+type Survey {
+	id: ID!
+	event_id: ID!
+	title: String!
+	questions: [Question]
+	active: Boolean!
+}
+
+#####################
+# Response Schema
+
+# Response Type
+type Response {
+	id: ID!
+	event_id: ID!
+	survey_id: ID!
+	question_id: ID!
+	user_id: ID!
+	response: String!
+}
+
+########################################
+# GraphQL Input Types
+
+# User input
+input UserInput {
+	first_name: String!
+	last_name: String!
+	email: String!
+	sso: Int!
+	liked_events: [ID]
+	interested_topics: [String]
+	roles: [UserRoles]
+}
+
+# Key Highlight input
+input KeyHighlightInput {
+	first_name: String!
+	last_name: String!
+	topic: String!
+	place: String!
+	start_time: String!
+	end_time: String!
+}
+
+# Location Details input
+input LocationDetailInput {
+	name: String!
+	address: String!
+	city: String!
+	country: String!
+	country_short_code: String!
+	direction: String!
+	zip_code: String!
+	image_url: String!
+}
+
+input SpeakerInput {
+	first_name: String!
+	last_name: String!
+	email: String!
+	avatar: String
+	topics: [String!]!
+	hobbies: [String]!
+	events: [ID]
+}
+
+########################################
+# GraphQL Queries
 
 type Query {
 	getUser(id: ID!): User!
@@ -102,16 +296,14 @@ type Query {
 	getSpeakers: [Speaker]!
 }
 
+########################################
+# GraphQL Mutations
+
 type Mutation {
-	addUser(
-		first_name: String!
-		last_name: String!
-		email: String!
-		sso: Int!
-	): User!
+	addUser(user: UserInput!): User!
 	deleteUser(id: ID!): User!
 	likeEvent(userId: ID!, eventId: ID!): User!
-	upsertInterestedTopics(id: ID!, topics: [String]!): User!
+	updateInterestedTopics(id: ID!, topics: [String]!): User!
 	addEvent(
 		title: String!
 		description: String!
@@ -126,13 +318,7 @@ type Mutation {
 		topics: [String!]!
 		category: [String!]!
 	): Event!
-	addSpeaker(
-		first_name: String!
-		last_name: String!
-		email: String!
-		avatar_url: String!
-		topics: [String!]!
-		hobbies: [String]!
-		events: [ID!]!
-	): Speaker!
+	addSpeaker(speaker: SpeakerInput!): Speaker!
 }
+
+########################################

@@ -3,21 +3,11 @@ import { isEmpty } from 'lodash'
 import { User } from '../../models/User'
 import { Event } from '../../models/Event'
 
-const addUser = async (
-	_,
-	{ first_name, last_name, email, sso, liked_events, interested_topics, roles }
-) => {
-	const user = new User({
-		first_name,
-		last_name,
-		email,
-		sso,
-		liked_events,
-		interested_topics,
-		roles,
-	})
-	await user.save()
-	return user
+const addUser = async (_, { user }) => {
+	console.log(user)
+	const newUser = new User(user)
+	await newUser.save()
+	return newUser
 }
 
 const deleteUser = async (_, { id }) => {
@@ -45,16 +35,18 @@ const likeEvent = async (_, { userId, eventId }) => {
 	return user
 }
 
-const upsertInterestedTopics = async (_, { id, topics }) => {
-	const user = await User.findById(id)
-	user.interested_topics = topics
-	user.save()
-	return user
+const updateInterestedTopics = async (_, { id, topics }) => {
+	const updatedUser = await User.findOneAndUpdate(
+		{ _id: id },
+		{ interested_topics: topics },
+		{ new: true }
+	)
+	return updatedUser
 }
 
 export default {
 	addUser,
 	deleteUser,
 	likeEvent,
-	upsertInterestedTopics,
+	updateInterestedTopics,
 }

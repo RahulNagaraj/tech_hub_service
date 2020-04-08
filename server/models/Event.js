@@ -3,6 +3,31 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const locationSchema = new Schema({
+	type: {
+		type: String,
+		enum: ['Point'],
+		required: true,
+	},
+	coordinates: {
+		type: [Number],
+		required: true,
+	},
+})
+
+const contactSchema = new Schema({
+	email: {
+		type: String,
+		required: true,
+	},
+	phone: {
+		type: [Number],
+	},
+	mobile: {
+		type: [Number],
+	},
+})
+
+const locationDetailSchema = new Schema({
 	name: {
 		type: String,
 		required: true,
@@ -23,16 +48,19 @@ const locationSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	direction: {
-		type: String,
-		required: true,
-	},
+	location: locationSchema,
 	zip_code: {
 		type: String,
 		required: true,
 	},
-	image_url: {
+	image: {
 		type: String,
+		required: true,
+	},
+	contact_information: {
+		id: false,
+		_id: false,
+		type: contactSchema,
 		required: true,
 	},
 })
@@ -46,7 +74,7 @@ const keyHighlightSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	avatar_url: {
+	avatar: {
 		type: String,
 		default: '',
 	},
@@ -60,6 +88,23 @@ const keyHighlightSchema = new Schema({
 	},
 	end_time: {
 		type: Date,
+		required: true,
+	},
+})
+
+const organizerSchema = new Schema({
+	first_name: {
+		type: String,
+		required: true,
+	},
+	last_name: {
+		type: String,
+		required: true,
+	},
+	contact_information: {
+		_id: false,
+		id: false,
+		type: contactSchema,
 		required: true,
 	},
 })
@@ -82,7 +127,7 @@ const eventSchema = new Schema(
 		location_details: {
 			id: false,
 			_id: false,
-			type: locationSchema,
+			type: locationDetailSchema,
 			required: true,
 		},
 		date: {
@@ -104,6 +149,7 @@ const eventSchema = new Schema(
 		likes: {
 			type: Number,
 			default: 0,
+			min: 0,
 		},
 		keyHighlights: {
 			id: false,
@@ -111,27 +157,29 @@ const eventSchema = new Schema(
 			type: [keyHighlightSchema],
 			rquired: true,
 		},
-		agenda: {
-			type: [String],
+		speakers: {
+			type: [Schema.ObjectId],
+			required: true,
+			unique: true,
 		},
-		votes: {
-			type: [String],
-			default: [],
-		},
-		questions: {
-			type: [String],
-		},
-		image_url: {
+		image: {
 			type: String,
 			required: true,
 		},
 		topics: {
 			type: [String],
 			required: true,
+			unique: true,
 		},
 		category: {
-			type: [String],
+			enum: ['Events', 'Birthdays', 'Volunteering'],
+			type: String,
 			required: true,
+		},
+		organizers: {
+			type: organizerSchema,
+			required: true,
+			default: [],
 		},
 	},
 	{
