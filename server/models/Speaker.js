@@ -30,6 +30,7 @@ const speakerSchema = new Schema(
 		events: {
 			type: [Object],
 			required: true,
+			unique: true,
 		},
 	},
 	{
