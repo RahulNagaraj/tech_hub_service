@@ -233,6 +233,27 @@ type Response {
 	response: String!
 }
 
+# Votes Response
+type VotesResponse {
+	option: String!
+	count: Int!
+}
+
+# Votes Count by Survey
+type VotesBySurvey {
+	survey_id: ID!
+	total_participants: Int!
+	response: [VotesByQuestion!]!
+}
+
+# Votes Count by Question
+type VotesByQuestion {
+	question_id: ID!
+	users_count: Int!
+	votes: [VotesResponse!]!
+	winner: String!
+}
+
 ########################################
 # GraphQL Input Types
 
@@ -416,8 +437,10 @@ type Query {
 	getSurvey(id: ID!): Survey!
 
 	# Response Queries
-	getResponseByQuestionId(id: ID!): [Response]!
-	getResponseBySurveyId(id: ID!): [Response]!
+	getResponseByQuestionId(question_id: ID!): [Response]!
+	getResponseBySurveyId(aurvey_id: ID!): [Response]!
+	calculateVotesByQuestion(question_id: ID!): [VotesByQuestion!]!
+	calculateVotesBySurvey(survey_id: ID!): [VotesBySurvey!]!
 }
 
 ########################################
