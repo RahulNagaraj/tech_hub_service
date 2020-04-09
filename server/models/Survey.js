@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
-import { includes } from 'lodash'
 
 const Schema = mongoose.Schema
 
 const listOptionSchema = new Schema({
+	id: false,
+	_id: false,
 	label: {
 		type: String,
 		required: true,
@@ -17,7 +18,6 @@ const listOptionSchema = new Schema({
 	},
 	avatar: {
 		type: String,
-		required: () => this.show_avatar,
 	},
 	info_icon: {
 		type: Boolean,
@@ -25,11 +25,12 @@ const listOptionSchema = new Schema({
 	},
 	info_text: {
 		type: String,
-		required: () => this.info_icon,
 	},
 })
 
 const ratingOptionSchema = new Schema({
+	id: false,
+	_id: false,
 	label: {
 		type: String,
 		required: true,
@@ -40,7 +41,6 @@ const ratingOptionSchema = new Schema({
 	},
 	info_text: {
 		type: String,
-		required: () => this.info_icon,
 	},
 })
 
@@ -53,7 +53,7 @@ const listSchema = new Schema({
 })
 
 const ratingSchema = new Schema({
-	options: ratingOptionSchema,
+	options: [ratingOptionSchema],
 	scale: {
 		type: Number,
 		default: 5,
@@ -98,19 +98,17 @@ const ruleSchema = new Schema({
 		id: false,
 		_id: false,
 		type: listSchema,
-		required: () => this.input_type === 'list',
+		required: true,
 	},
 	rating_rule: {
 		id: false,
 		_id: false,
 		type: ratingSchema,
-		required: () => this.input_type === 'rating',
 	},
 	input_rule: {
 		id: false,
 		_id: false,
 		type: inputSchema,
-		required: () => includes(['input'], this.input_type),
 	},
 	required: {
 		type: Boolean,
@@ -151,7 +149,7 @@ const surveySchema = new Schema(
 			required: true,
 		},
 		questions: {
-			type: questionSchema,
+			type: [questionSchema],
 			required: true,
 		},
 		active: {

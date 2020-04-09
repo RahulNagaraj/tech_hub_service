@@ -152,7 +152,7 @@ type ListOption {
 
 # Rating Option
 type RatingOption {
-	label: String
+	label: String!
 	info_icon: Boolean
 	info_text: String
 }
@@ -165,7 +165,7 @@ type ListRule {
 
 # Rating Rule
 type RatingRule {
-	options: RatingOption!
+	options: [RatingOption]!
 	scale: Int
 	icon: RatingIcon
 }
@@ -209,7 +209,7 @@ type Question {
 	title: String!
 	name: String!
 	sub_title: String
-	rules: [Rule!]!
+	rules: Rule!
 }
 
 # Survey Type
@@ -321,6 +321,69 @@ input EventInput {
 	speakers: [ID!]!
 }
 
+# List Rule Input Option
+input ListRuleInputOption {
+	label: String!
+	value: String!
+	sub_title: String
+	avatar: String
+	info_icon: Boolean
+	info_text: String
+}
+
+# Rating Rule Input Option
+input RatingRuleInputOption {
+	label: String!
+	info_icon: Boolean
+	info_text: String
+}
+
+# List Rule input
+input ListRuleInput {
+	options: [ListRuleInputOption!]!
+	show_avatar: Boolean
+}
+
+# Rating Rule input
+input RatingRuleInput {
+	options: [RatingRuleInputOption]!
+	scale: Int
+	icon: RatingIcon
+}
+
+# Input Rule input
+input InputRuleInput {
+	type: InputRuleType!
+	label: String!
+	name: String!
+	max_length: Int
+	min_length: Int
+}
+
+# Rule input
+input RuleInput {
+	input_type: InputType!
+	list_rule: ListRuleInput
+	rating_rule: RatingRuleInput
+	input_rule: InputRuleInput
+}
+
+# Question input
+input QuestionInput {
+	title: String!
+	name: String!
+	sub_title: String
+	rules: RuleInput!
+}
+
+# Survey input
+input SurveyInput {
+	event_id: ID!
+	title: String!
+	questions: [QuestionInput!]!
+	active: Boolean!
+}
+
 ########################################
 # GraphQL Queries
 
@@ -359,6 +422,9 @@ type Mutation {
 	addSpeaker(speaker: SpeakerInput!): Speaker!
 	addEventToSpeaker(speakerId: ID!, eventId: ID!): Speaker!
 	updateHobbies(speakerId: ID!, hobbies: [String]!): Speaker!
+
+	# Survey Mutations
+	addSurvey(survey: SurveyInput!): Survey!
 }
 
 ########################################
