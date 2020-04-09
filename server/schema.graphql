@@ -227,7 +227,6 @@ type Survey {
 # Response Type
 type Response {
 	id: ID!
-	event_id: ID!
 	survey_id: ID!
 	question_id: ID!
 	user_id: ID!
@@ -384,6 +383,14 @@ input SurveyInput {
 	active: Boolean!
 }
 
+# Response input
+input ResponseInput {
+	survey_id: ID!
+	question_id: ID!
+	user_id: ID!
+	response: String!
+}
+
 ########################################
 # GraphQL Queries
 
@@ -403,6 +410,14 @@ type Query {
 	# Speaker Queries
 	getSpeaker(id: ID!): Speaker!
 	getSpeakers: [Speaker]!
+
+	# Survey Queries
+	getSurveys: [Survey!]!
+	getSurvey(id: ID!): Survey!
+
+	# Response Queries
+	getResponseByQuestionId(id: ID!): [Response]!
+	getResponseBySurveyId(id: ID!): [Response]!
 }
 
 ########################################
@@ -425,6 +440,9 @@ type Mutation {
 
 	# Survey Mutations
 	addSurvey(survey: SurveyInput!): Survey!
+
+	# Response Mutations
+	addResponse(response: ResponseInput!): Response!
 }
 
 ########################################
