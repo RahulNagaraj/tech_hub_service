@@ -354,7 +354,11 @@ type Mutation {
 
 	# Event Mutations
 	addEvent(event: EventInput!): Event!
+
+	# Speaker Mutations
 	addSpeaker(speaker: SpeakerInput!): Speaker!
+	addEventToSpeaker(speakerId: ID!, eventId: ID!): Speaker!
+	updateHobbies(speakerId: ID!, hobbies: [String]!): Speaker!
 }
 
 ########################################

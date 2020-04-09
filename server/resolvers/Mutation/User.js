@@ -1,10 +1,10 @@
-import { isEmpty } from 'lodash'
+import mongoose from 'mongoose'
+import { isEmpty, isEqual } from 'lodash'
 
 import { User } from '../../models/User'
 import { Event } from '../../models/Event'
 
 const addUser = async (_, { user }) => {
-	console.log(user)
 	const newUser = new User(user)
 	await newUser.save()
 	return newUser
@@ -19,12 +19,14 @@ const likeEvent = async (_, { userId, eventId }) => {
 	const user = await User.findById(userId)
 	const event = await Event.findById(eventId)
 
-	const alreadyLiked = isEmpty(
-		user.liked_events.filter((event) => event === eventId)
+	const alreadyLiked = user.liked_events.filter((event) =>
+		isEqual(event, mongoose.Types.ObjectId(eventId))
 	)
 	let { updatedLikedEvents } = user.liked_events
-	if (!alreadyLiked) {
-		updatedLikedEvents = user.liked_events.filter((event) => event !== eventId)
+	if (alreadyLiked && alreadyLiked.length > 0) {
+		updatedLikedEvents = user.liked_events.filter(
+			(event) => !isEqual(event, mongoose.Types.ObjectId(eventId))
+		)
 		await event.update({ $inc: { likes: -1 } })
 	} else {
 		updatedLikedEvents = user.liked_events.concat(eventId)

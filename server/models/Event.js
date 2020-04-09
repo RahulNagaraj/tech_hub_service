@@ -167,7 +167,6 @@ const eventSchema = new Schema(
 		speakers: {
 			type: [Schema.ObjectId],
 			required: true,
-			unique: true,
 		},
 		image: {
 			type: String,
@@ -175,7 +174,6 @@ const eventSchema = new Schema(
 		topics: {
 			type: [String],
 			required: true,
-			unique: true,
 		},
 		category: {
 			enum: ['Events', 'Birthdays', 'Volunteering'],
