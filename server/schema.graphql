@@ -326,8 +326,8 @@ input EventInput {
 
 type Query {
 	# User Queries
-	getUserById(id: ID!): User!
-	getUserBySso(sso: Int!): User!
+	getUserById(id: ID!): User
+	getUserBySso(sso: Int!): User
 	getUsers: [User!]!
 
 	# Event Queries
