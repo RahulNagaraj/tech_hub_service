@@ -2,9 +2,14 @@ import { User } from '../../models/User'
 
 const getUsers = () => User.find()
 
-const getUser = async (_, { id }) => {
+const getUserById = async (_, { id }) => {
 	const user = await User.findById(id)
 	return user
 }
 
-export default { getUser, getUsers }
+const getUserBySso = async (_, { sso }) => {
+	const user = await User.findOne({ sso })
+	return user
+}
+
+export default { getUserById, getUsers, getUserBySso }

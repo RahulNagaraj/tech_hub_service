@@ -48,14 +48,17 @@ const locationDetailSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	location: locationSchema,
+	location: {
+		id: false,
+		_id: false,
+		type: locationSchema,
+	},
 	zip_code: {
 		type: String,
 		required: true,
 	},
 	image: {
 		type: String,
-		required: true,
 	},
 	contact_information: {
 		id: false,
@@ -88,6 +91,10 @@ const keyHighlightSchema = new Schema({
 	},
 	end_time: {
 		type: Date,
+		required: true,
+	},
+	place: {
+		type: String,
 		required: true,
 	},
 })
@@ -151,7 +158,7 @@ const eventSchema = new Schema(
 			default: 0,
 			min: 0,
 		},
-		keyHighlights: {
+		key_highlights: {
 			id: false,
 			_id: false,
 			type: [keyHighlightSchema],
@@ -164,7 +171,6 @@ const eventSchema = new Schema(
 		},
 		image: {
 			type: String,
-			required: true,
 		},
 		topics: {
 			type: [String],
@@ -177,7 +183,9 @@ const eventSchema = new Schema(
 			required: true,
 		},
 		organizers: {
-			type: organizerSchema,
+			id: false,
+			_id: false,
+			type: [organizerSchema],
 			required: true,
 			default: [],
 		},

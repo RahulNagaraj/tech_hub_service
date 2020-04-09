@@ -36,7 +36,7 @@ scalar Date
 # Location coordinates of the event
 type Location {
 	type: LocationType!
-	coordinates: [Int]!
+	coordinates: [Float]!
 }
 
 # Contact information
@@ -53,7 +53,6 @@ type LocationDetail {
 	city: String!
 	country: String!
 	country_short_code: String!
-	direction: String!
 	zip_code: String!
 	image: String!
 	location: Location!
@@ -101,7 +100,7 @@ type Event {
 	speakers: [Speaker!]!
 	image: String!
 	topics: [String!]!
-	category: [Category!]!
+	category: Category!
 	organizers: [Organizer]!
 }
 
@@ -259,6 +258,19 @@ input KeyHighlightInput {
 	end_time: String!
 }
 
+# Contact Info input
+input ContactInformationInput {
+	email: String!
+	phone: [Int]
+	mobile: [Int]
+}
+
+# Location input
+input LocationInput {
+	type: LocationType!
+	coordinates: [Float!]!
+}
+
 # Location Details input
 input LocationDetailInput {
 	name: String!
@@ -266,11 +278,20 @@ input LocationDetailInput {
 	city: String!
 	country: String!
 	country_short_code: String!
-	direction: String!
+	location: LocationInput!
 	zip_code: String!
-	image_url: String!
+	image: String
+	contact_information: ContactInformationInput
 }
 
+# Organizer input
+input OrganizerInput {
+	first_name: String!
+	last_name: String!
+	contact_information: ContactInformationInput!
+}
+
+# Speaker input
 input SpeakerInput {
 	first_name: String!
 	last_name: String!
@@ -281,17 +302,42 @@ input SpeakerInput {
 	events: [ID]
 }
 
+# Event input
+input EventInput {
+	title: String!
+	description: String!
+	short_description: String
+	location_details: LocationDetailInput!
+	date: String!
+	start_time: String!
+	end_time: String!
+	days: Int!
+	likes: Int
+	key_highlights: [KeyHighlightInput!]!
+	image: String
+	topics: [String!]!
+	category: Category!
+	organizers: [OrganizerInput!]!
+	speakers: [ID!]!
+}
+
 ########################################
 # GraphQL Queries
 
 type Query {
-	getUser(id: ID!): User!
+	# User Queries
+	getUserById(id: ID!): User!
+	getUserBySso(sso: Int!): User!
 	getUsers: [User!]!
+
+	# Event Queries
 	getEvent(id: ID!): Event!
 	getEvents: [Event]!
 	getEventsByLocation(city: String!): [Event]!
 	getEventsByCategory(name: String!): [Event!]!
 	getEventsByTitle(input: String!): [Event]!
+
+	# Speaker Queries
 	getSpeaker(id: ID!): Speaker!
 	getSpeakers: [Speaker]!
 }
@@ -300,24 +346,14 @@ type Query {
 # GraphQL Mutations
 
 type Mutation {
+	# User Mutations
 	addUser(user: UserInput!): User!
 	deleteUser(id: ID!): User!
 	likeEvent(userId: ID!, eventId: ID!): User!
 	updateInterestedTopics(id: ID!, topics: [String]!): User!
-	addEvent(
-		title: String!
-		description: String!
-		short_description: String
-		location_details: LocationDetailInput!
-		date: String!
-		start_time: String!
-		end_time: String!
-		days: Int!
-		keyHighlights: [KeyHighlightInput!]!
-		image_url: String!
-		topics: [String!]!
-		category: [String!]!
-	): Event!
+
+	# Event Mutations
+	addEvent(event: EventInput!): Event!
 	addSpeaker(speaker: SpeakerInput!): Speaker!
 }
 
